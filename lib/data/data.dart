@@ -4,6 +4,9 @@ List<CategoriesModel> getCategories() {
   List<CategoriesModel> categories = new List();
   CategoriesModel categoriesModel = new CategoriesModel();
 
+  String apiKey =
+      "https://learning.postman.com/docs/sending-requests/variables/";
+
   //Street Art
   categoriesModel.imgUrl =
       // "https://images.pexels.com/photos/545008/pexels-photo-545008.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500";
