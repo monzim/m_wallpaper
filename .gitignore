@@ -1,4 +1,7 @@
-lib/data/data.dart
+####api folders ####
+##################
+/lib/data/
+
 # Miscellaneous
 *.class
 *.log
