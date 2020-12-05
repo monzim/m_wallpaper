@@ -1,6 +1,6 @@
 ####api folders ####
 ##################
-/lib/data/
+lib/data/
 
 # Miscellaneous
 *.class
