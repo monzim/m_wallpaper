@@ -5,10 +5,12 @@ import 'package:m_wallpaper/views/image_view.dart';
 Widget brandName() {
   return RichText(
     text: TextSpan(
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       children: <TextSpan>[
-        TextSpan(text: 'Wallpaper', style: TextStyle(color: Colors.black87)),
-        TextSpan(text: 'Hub', style: TextStyle(color: Colors.blue)),
+        TextSpan(text: 'M', style: TextStyle(color: Colors.deepOrange[100])),
+        TextSpan(text: 'Wall', style: TextStyle(color: Colors.deepOrange[100])),
+        TextSpan(text: 'paper', style: TextStyle(color: Colors.white)),
+        TextSpan(text: 'Hub', style: TextStyle(color: Colors.white)),
       ],
     ),
   );
@@ -22,9 +24,10 @@ Widget wallpapersList({List<WallpaperModel> wallpapers, context}) {
       shrinkWrap: true,
       crossAxisCount: 2,
       childAspectRatio: 0.6,
-      //gap two images
-      mainAxisSpacing: 6.0,
-      crossAxisSpacing: 6.0,
+
+      //gap between two images
+      mainAxisSpacing: 5.0,
+      crossAxisSpacing: 5.0,
       children: wallpapers.map((wallpaper) {
         return GridTile(
             child: GestureDetector(
@@ -39,14 +42,36 @@ Widget wallpapersList({List<WallpaperModel> wallpapers, context}) {
           },
           child: Hero(
             tag: wallpaper.src.portrait,
-            child: Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Image.network(
-                  wallpaper.src.portrait,
-                  fit: BoxFit.cover,
+            child: Stack(
+              children: [
+                //corner of images
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrange[100],
+                    // borderRadius: BorderRadius.circular(10),
+                  ),
+                  height: 266,
                 ),
-              ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [Text("Loading..")],
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Image.network(
+                      wallpaper.src.portrait,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ));

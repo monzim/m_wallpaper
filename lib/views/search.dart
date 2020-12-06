@@ -46,9 +46,13 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: BackButton(color: Colors.white),
+        backgroundColor: Colors.black,
         title: brandName(),
         elevation: 0.0,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Container(

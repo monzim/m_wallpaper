@@ -53,13 +53,17 @@ class _ImageViewState extends State<ImageView> {
                           height: 55,
                           decoration: BoxDecoration(
                               border: Border.all(
-                                color: Colors.white54,
+                                // white54
+                                color: Colors.orange[50],
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(30),
                               gradient: LinearGradient(colors: [
-                                Color(0x36FFFFFF),
-                                Color(0x0FFFFFFF),
+                                // Color(0x36FFFFFF),
+                                // Color(0x0FFFFFFF),
+                                Colors.deepOrange[900],
+                                Colors.blueGrey[900],
+                                // Colors.amber[900]
                               ])),
                           child: Column(
                             children: [

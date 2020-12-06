@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:m_wallpaper/data/data.dart';
 import 'package:m_wallpaper/model/categories_model.dart';
@@ -27,7 +26,7 @@ class _HomeState extends State<Home> {
   getTrendingWallpapers() async {
     var response = await http.get(
         //geting the tranding photos here
-        'https://api.pexels.com/v1/curated?per_page=15',
+        'https://api.pexels.com/v1/curated?per_page=30',
         headers: {"Authorization": apiKey});
 
     // print(response.body.toString());
@@ -54,8 +53,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: brandName(),
         centerTitle: true,
         elevation: 0.0,
@@ -153,8 +153,12 @@ class CategoriesTile extends StatelessWidget {
             //categories ImageUrl
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(imgUrl,
-                  fit: BoxFit.cover, height: 50, width: 100),
+              child: Image.network(
+                imgUrl,
+                fit: BoxFit.cover,
+                height: 50,
+                width: 100,
+              ),
             ),
 
             //categories Name

@@ -18,7 +18,7 @@ class _CategorieState extends State<Categorie> {
   getSearchgWallpapers(String query) async {
     var response = await http.get(
         //geting the tranding photos here
-        "https://api.pexels.com/v1/search?query=$query&per_page=30&page=1",
+        "https://api.pexels.com/v1/search?query=$query&per_page=20&page=1",
         headers: {"Authorization": apiKey});
 
     // print(response.body.toString());
@@ -43,7 +43,10 @@ class _CategorieState extends State<Categorie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: BackButton(color: Colors.white),
+        backgroundColor: Colors.black,
         title: brandName(),
         elevation: 0.0,
         centerTitle: true,
