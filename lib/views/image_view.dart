@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:wallpaper_manager/wallpaper_manager.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
 class ImageView extends StatefulWidget {
   final String imageUrl;
@@ -9,6 +14,22 @@ class ImageView extends StatefulWidget {
 }
 
 class _ImageViewState extends State<ImageView> {
+  @override
+  void initState() {
+    super.initState();
+
+    _requestPermission();
+  }
+
+  _requestPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
+
+    final info = statuses[Permission.storage].toString();
+    print(info);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +55,21 @@ class _ImageViewState extends State<ImageView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                //for closeing the showing wallpaper
+                //wallpaper download button
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    File file = await DefaultCacheManager()
+                        .getSingleFile(widget.imageUrl);
+                    print(file.path);
+                    final result = await ImageGallerySaver.saveFile(file.path);
+                    print("gallerysaver result $result");
+
+                    String resultWall =
+                        await WallpaperManager.setWallpaperFromFile(
+                            file.path, WallpaperManager.HOME_SCREEN);
+
+                    print("resultWall $resultWall");
+                  },
                   child: Stack(
                     children: [
                       Container(
@@ -53,17 +86,13 @@ class _ImageViewState extends State<ImageView> {
                           height: 55,
                           decoration: BoxDecoration(
                               border: Border.all(
-                                // white54
-                                color: Colors.orange[50],
+                                color: Colors.white,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(30),
                               gradient: LinearGradient(colors: [
-                                // Color(0x36FFFFFF),
-                                // Color(0x0FFFFFFF),
-                                Colors.deepOrange[900],
-                                Colors.blueGrey[900],
-                                // Colors.amber[900]
+                                Colors.blueGrey[100],
+                                Colors.grey[900],
                               ])),
                           child: Column(
                             children: [
@@ -88,11 +117,14 @@ class _ImageViewState extends State<ImageView> {
                   ),
                 ),
                 SizedBox(height: 16),
+                //for closeing the showing wallpaper
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Text(
                     'Cancel',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.amber,
+                    ),
                   ),
                 ),
                 SizedBox(height: 50)

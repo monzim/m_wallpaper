@@ -7,8 +7,9 @@ Widget brandName() {
     text: TextSpan(
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       children: <TextSpan>[
-        TextSpan(text: 'M', style: TextStyle(color: Colors.deepOrange[100])),
-        TextSpan(text: 'Wall', style: TextStyle(color: Colors.deepOrange[100])),
+        TextSpan(text: 'M', style: TextStyle(color: Colors.amber)),
+        // deepOrange[100]
+        TextSpan(text: 'Wall', style: TextStyle(color: Colors.amber)),
         TextSpan(text: 'paper', style: TextStyle(color: Colors.white)),
         TextSpan(text: 'Hub', style: TextStyle(color: Colors.white)),
       ],
@@ -47,10 +48,10 @@ Widget wallpapersList({List<WallpaperModel> wallpapers, context}) {
                 //corner of images
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.deepOrange[100],
-                    // borderRadius: BorderRadius.circular(10),
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  height: 266,
+                  height: MediaQuery.of(context).size.height / 3.11,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -63,6 +64,7 @@ Widget wallpapersList({List<WallpaperModel> wallpapers, context}) {
                   ],
                 ),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: .5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: Image.network(
