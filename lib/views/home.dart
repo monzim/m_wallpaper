@@ -4,7 +4,6 @@ import 'package:m_wallpaper/data/data.dart';
 import 'package:m_wallpaper/model/categories_model.dart';
 import 'package:m_wallpaper/model/wallpaper_model.dart';
 import 'package:m_wallpaper/views/category.dart';
-import 'package:m_wallpaper/views/image_view.dart';
 import 'package:m_wallpaper/views/search.dart';
 import 'package:m_wallpaper/widgets/widget.dart';
 import 'package:http/http.dart' as http;

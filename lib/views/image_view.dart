@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:wallpaper_manager/wallpaper_manager.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
 
 class ImageView extends StatefulWidget {
   final String imageUrl;
@@ -14,22 +12,6 @@ class ImageView extends StatefulWidget {
 }
 
 class _ImageViewState extends State<ImageView> {
-  @override
-  void initState() {
-    super.initState();
-
-    _requestPermission();
-  }
-
-  _requestPermission() async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-    ].request();
-
-    final info = statuses[Permission.storage].toString();
-    print(info);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,20 +37,24 @@ class _ImageViewState extends State<ImageView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                //wallpaper download button
+                //for closeing the showing wallpaper
                 GestureDetector(
                   onTap: () async {
-                    File file = await DefaultCacheManager()
-                        .getSingleFile(widget.imageUrl);
-                    print(file.path);
-                    final result = await ImageGallerySaver.saveFile(file.path);
-                    print("gallerysaver result $result");
+                    final status = await Permission.storage.request();
 
-                    String resultWall =
-                        await WallpaperManager.setWallpaperFromFile(
-                            file.path, WallpaperManager.HOME_SCREEN);
+                    if (status.isGranted) {
+                      final externalDir = await getExternalStorageDirectory();
 
-                    print("resultWall $resultWall");
+                      final id = await FlutterDownloader.enqueue(
+                        url: widget.imageUrl,
+                        savedDir: externalDir.path,
+                        fileName: "Mwallpaper",
+                        showNotification: true,
+                        openFileFromNotification: true,
+                      );
+                    } else {
+                      print("Permission deined");
+                    }
                   },
                   child: Stack(
                     children: [
@@ -86,13 +72,13 @@ class _ImageViewState extends State<ImageView> {
                           height: 55,
                           decoration: BoxDecoration(
                               border: Border.all(
-                                color: Colors.white,
+                                color: Colors.white54,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(30),
                               gradient: LinearGradient(colors: [
-                                Colors.blueGrey[100],
-                                Colors.grey[900],
+                                Color(0x36FFFFFF),
+                                Color(0x0FFFFFFF),
                               ])),
                           child: Column(
                             children: [
@@ -117,14 +103,11 @@ class _ImageViewState extends State<ImageView> {
                   ),
                 ),
                 SizedBox(height: 16),
-                //for closeing the showing wallpaper
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Text(
                     'Cancel',
-                    style: TextStyle(
-                      color: Colors.amber,
-                    ),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 50)
